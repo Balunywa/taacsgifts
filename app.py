@@ -4,7 +4,7 @@ import requests
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
-params = urllib.parse.quote_plus("DRIVER={ODBC Driver 18 for SQL Server};SERVER=giftcricledbserver.database.windows.net;DATABASE=giftcricle;UID=balunlu;PWD=Luq#123450;Connection Timeout=60")
+params = urllib.parse.quote_plus("DRIVER={ODBC Driver 17 for SQL Server};SERVER=giftcricledbserver.database.windows.net;DATABASE=giftcricle;UID=balunlu;PWD=Luq#123450;Connection Timeout=60")
 
 conn_str = 'mssql+pyodbc:///?odbc_connect={}'.format(params)
 
