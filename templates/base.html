@@ -1,131 +1,116 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>{% block title %}{% endblock %}</title>
-	<style>
-		/* CSS code goes here */
-		body {
-			font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-			background-color: #f3f6f8;
-		}
-		header {
-			background-color: #0077b5;
-			color: white;
-			padding: 20px;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-		}
-		.logo {
-			height: 50px;
-			margin-right: 20px;
-		}
-		nav {
-			margin-top: 20px;
-			margin-bottom: 20px;
-		}
-		nav ul {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-		}
-		nav li {
-			display: inline-block;
-			margin-right: 20px;
-		}
-		nav li a {
-			color: white;
-			text-decoration: none;
-			font-size: 18px;
-			font-weight: bold;
-			padding: 10px;
-		}
-		main {
-			max-width: 800px;
-			margin: 20px auto;
-			padding: 20px;
-			background-color: white;
-			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-			border-radius: 5px;
-		}
-		.flash-message {
-			padding: 10px;
-			margin-bottom: 10px;
-			border-radius: 5px;
-			font-size: 18px;
-		}
-		.flash-message.success {
-			background-color: #dff0d8;
-			color: #3c763d;
-			border-color: #d6e9c6;
-		}
-		.flash-message.error {
-			background-color: #f2dede;
-			color: #a94442;
-			border-color: #ebccd1;
-		}
-		footer {
-			background-color: #f3f6f8;
-			color: #626a72;
-			padding: 20px;
-			text-align: center;
-			position: fixed;
-			bottom: 0;
-			width: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
-		footer p {
-			font-size: 18px;
-			margin: 0;
-		}
-		footer img {
-			height: 50px;
-			margin-left: 10px;
-		}
-	</style>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <style>
+      /* CSS code goes here */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f3f6f8;
+      }
+
+      .logo {
+        height: 50px;
+        margin-right: 20px;
+      }
+
+      main {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+
+      footer {
+        background-color: #f3f6f8;
+        color: #626a72;
+        padding: 20px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      footer p {
+        font-size: 18px;
+        margin: 0;
+      }
+
+      footer img {
+        height: 50px;
+        margin-left: 10px;
+      }
+    </style>
   </head>
   <body>
     <header>
-      <div>
-        <img src="https://i.imgur.com/US8mrzW.png" alt="Mixit.Life" class="logo">    
-
-        <h1 style="font-size: 32px; font-weight: bold; margin: 0;">Welcome to Mixit.Life</h1>
-      </div>
-      <nav>
-        <ul>
-          {% if 'user_id' in session %}
-            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-            <li><a href="{{ url_for('create_playlist') }}">Create Playlist</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-          {% else %}
-            <li><a href="{{ url_for('signup') }}">User Sign up</a></li>
-            <li><a href="{{ url_for('dj_signup') }}">DJ Sign up</a></li>
-            <li><a href="{{ url_for('login') }}">Log in</a></li>
-          {% endif %}
-        </ul>
+      <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">
+          <img src="https://i.imgur.com/US8mrzW.png" alt="Mixit.Life" class="logo">
+          <h1 style="font-size: 32px; font-weight: bold; margin: 0;">Welcome to Mixit.Life</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            {% if 'user_id' in session %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('create_playlist') }}">Create Playlist</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('signup') }}">User Sign up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('dj_signup') }}">DJ Sign up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('login') }}">Log in</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
       </nav>
-
     </header>
-
-    <main>
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          {% for message in messages %}
-            <div class="flash-message {{ message[1] }}">
-              {{ message[0] }}
-            </div>
-          {% endfor %}
-        {% endif %}
-      {% endwith %}
-    
-      {% block content %}{% endblock %}
-    </main>
-    
-    <footer>
-      <p style="margin: 0;">&copy; 2023 Mixit.Life</p>
-    </footer>
-    
-  </body>
+	<main class="container">
+		<div class="row">
+		  <div class="col">
+			{% with messages = get_flashed_messages() %}
+			{% if messages %}
+			{% for message in messages %}
+			<div class="alert alert-{{ message[1] }} alert-dismissible fade show" role="alert">
+			  {{ message[0] }}
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			{% endfor %}
+			{% endif %}
+			{% endwith %}
+  
+			{% block content %}{% endblock %}
+		  </div>
+		</div>
+	  </main>
+  
+	  <footer>
+		<p style="margin: 0;">&copy; 2023 Mixit.Life</p>
+	  </footer>
+  
+	</body>
   </html>
+  
+   
