@@ -3,136 +3,160 @@
 {% block content %}
 
   <div class="login-container">
-    <h1>Log In</h1>
-    <form method="post" action="{{ url_for('login') }}">
+    <h1>Log in to Mixit.Life</h1>
+    <form method="post" action="{{ url_for('login') }}" id="login-form">
       <div class="form-group">
-        <label for="email"><i class="fas fa-envelope"></i></label>
-        <input type="text" name="email" id="email" placeholder="Email or username" required>
+        <label for="email-input"><span class="sr-only">Email or phone</span></label>
+        <input type="text" name="email" id="email-input" placeholder="Email or phone" required>
       </div>
       <div class="form-group">
-        <label for="password"><i class="fas fa-lock"></i></label>
-        <input type="password" name="password" id="password" placeholder="Password" required>
+        <label for="password-input"><span class="sr-only">Password</span></label>
+        <input type="password" name="password" id="password-input" placeholder="Password" required>
       </div>
       <div class="form-group">
-        <button type="submit">Sign In</button>
+        <button type="submit">Log In</button>
       </div>
       <div class="form-group">
-        <p class="forgot-password"><a href="#">Forgot password?</a></p>
+        <a href="#" class="forgot-password">Forgot Password?</a>
       </div>
+      <hr>
+      <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up for Mixit.Life</a></p>
     </form>
-    <div class="signup-link">
-      <p>Don't have an account yet? <a href="{{ url_for('signup') }}">Sign up</a></p>
-    </div>
   </div>
+
 {% endblock %}
+
 {% block css %}
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
     body {
-      background-image: url('background-image.jpg');
-      background-size: cover;
-      font-family: 'Open Sans', sans-serif;
-      color: #fff;
+      background-color: #f0f2f5;
+      font-family: 'Roboto', sans-serif;
     }
 
     .login-container {
-      max-width: 480px;
+      max-width: 420px;
       margin: 0 auto;
-      padding: 40px 30px;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 5px;
+      padding: 40px 20px;
+      background-color: #fff;
+      border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      animation: fade-in 0.5s ease-in-out;
-    }
-
-    @keyframes fade-in {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
     }
 
     h1 {
-      font-size: 36px;
-      font-weight: 400;
+      font-size: 24px;
+      font-weight: 700;
       text-align: center;
       margin-bottom: 30px;
     }
 
     .form-group {
       margin-bottom: 20px;
-      position: relative;
     }
 
     label {
-      position: absolute;
-      top: 50%;
-      left: 20px;
-      transform: translateY(-50%);
-      font-size: 20px;
-      color: #333;
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #606770;
     }
-    
+
     input[type="text"],
     input[type="password"] {
       width: 100%;
-      padding: 15px;
-      border: none;
+      padding: 12px;
+      border: 1px solid #dddfe2;
       border-radius: 5px;
       font-size: 16px;
-      color: #333;
-      background-color: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      color: #1c1e21;
+      background-color: #f0f2f5;
     }
-    
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: #1877f2;
+    }
+
     button[type="submit"] {
       display: block;
       width: 100%;
-      padding: 12px 0;
+      padding: 12px;
       border: none;
       border-radius: 5px;
-      background-color: #0077b5;
+      background-color: #1877f2;
       color: #fff;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: 700;
       text-align: center;
       text-transform: uppercase;
       letter-spacing: 1px;
       cursor: pointer;
       transition: background-color 0.2s ease-in-out;
     }
-    
+
     button[type="submit"]:hover {
-      background-color: #006699;
+      background-color: #166fe5;
     }
-    
+
     .forgot-password {
-      text-align: right;
-      margin-bottom: 0;
-      font-size: 14px;
-      color: #fff;
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    .signup-link {
-      text-align: center;
-      margin-top: 30px;
-    }
-    
-    .signup-link a {
-      color: #0077b5;
-      font-weight: 600;
+      font-size
+      14px;
+      font-weight: 700;
+      color: #1877f2;
       text-decoration: none;
+      transition: color 0.2s ease-in-out;
     }
     
-    .fas {
-      margin-right: 10px;
+    .forgot-password:hover {
+      color: #166fe5;
+    }
+    
+    hr {
+      border: none;
+      border-top: 1px solid #dddfe2;
+      margin: 20px 0;
+    }
+    
+    p {
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      color: #606770;
+    }
+    
+    a {
+      color: #1877f2;
+      text-decoration: none;
+      transition: color 0.2s ease-in-out;
+    }
+    
+    a:hover {
+      color: #166fe5;
     }
   </style>
+  {% endblock %}
+  
+  {% block javascript %}
+  
+    <script>
+      // Client-side form validation
+      const loginForm = document.getElementById('login-form');
+  
+      loginForm.addEventListener('submit', (event) => {
+        const emailInput = document.getElementById('email-input');
+        const passwordInput = document.getElementById('password-input');
+  
+        if (!emailInput.checkValidity() || !passwordInput.checkValidity()) {
+          event.preventDefault();
+          // Show error message to user
+          // ...
+        }
+      });
+    </script>
   {% endblock %}    
 
 

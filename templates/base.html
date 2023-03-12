@@ -85,32 +85,43 @@
         </div>
       </nav>
     </header>
-	<main class="container">
-		<div class="row">
-		  <div class="col">
-			{% with messages = get_flashed_messages() %}
-			{% if messages %}
-			{% for message in messages %}
-			<div class="alert alert-{{ message[1] }} alert-dismissible fade show" role="alert">
-			  {{ message[0] }}
-			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			  </button>
-			</div>
-			{% endfor %}
-			{% endif %}
-			{% endwith %}
-  
-			{% block content %}{% endblock %}
-		  </div>
-		</div>
-	  </main>
-  
-	  <footer>
-		<p style="margin: 0;">&copy; 2023 Mixit.Life</p>
-	  </footer>
-  
-	</body>
-  </html>
-  
+    
+    <main class="container">
+      <div class="row">
+        <div class="col">
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{{ message[1] }} alert-dismissible fade show" role="alert">
+            {{ message[0] }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </main>
+
+    <footer class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <p>&copy; 2023 Mixit.Life</p>
+          </div>
+          <div class="col-md-6">
+            <img src="https://i.imgur.com/6NlrJqx.png" alt="Social media icons">
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+
    
