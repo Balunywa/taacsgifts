@@ -93,3 +93,33 @@ def invite():
 if __name__ == '__main__':
     db.create_all()
     app.run()
+
+
+
+
+""""
+@app.route('/create_playlist', methods=['GET', 'POST'])
+def create_playlist():
+    if 'user_id' not in session:
+        flash('Please log in to create a playlist', 'error')
+        return redirect(url_for('login'))
+
+    user = User.query.filter_by(id=session['user_id']).first()
+
+    if request.method == 'POST':
+        name = request.form['name']
+        description = request.form['description']
+        cover_art = request.form['cover_art']
+        musicians = request.form.getlist('musicians')
+        playlist = Playlist(name=name, description=description, cover_art=cover_art, user=user)
+        if playlist.musicians is None:
+            playlist.musicians = []
+        for musician in musicians:
+            playlist.musicians.append(musician)
+        db.session.add(playlist)
+        db.session.commit()
+        flash('Playlist created successfully', 'success')
+        return redirect(url_for('dashboard'))
+
+    return render_template('create_playlist.html', user=user)
+""""

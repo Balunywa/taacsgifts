@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="header">
+  <div class="profile-picture"></div>
+  <div class="user-info">
+    <h1>Welcome to your dashboard, {{ user.name }}!</h1>
+    <p>Your account balance is ${{ user.balance }}</p>
+  </div>
+</div>
+
+<div class="container">
+  <h1 class="title">Dashboard</h1>
+
+  {% if playlists %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="table-header">Playlist Name</th>
+          <th class="table-header">Musicians</th>
+          <th class="table-header">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for playlist in playlists %}
+          <tr>
+            <td>{{ playlist.name }}</td>
+            <td>
+              {% for musician in playlist.musicians %}
+                {{ musician }}{% if not loop.last %}, {% endif %}
+              {% endfor %}
+            </td>
+            <td>
+              <form method="POST" action="{{ url_for('share_playlist', playlist_id=playlist.id) }}">
+                <label for="dj_id">Share with DJ:</label>
+                <select name="dj_id" id="dj_id">
+                  {% for dj in djs %}
+                    <option value="{{ dj.id }}">{{ dj.name }}</option>
+                  {% endfor %}
+                </select>
+                <button type="submit" class="button">Share</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>You don't have any playlists yet.</p>
+  {% endif %}
+</div>
+
+<style>
+  body {
+    background-color: #f5f5f5;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    background-color: #0077b5;
+    color: white;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  }
+
+  .profile-picture {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: white;
+    margin-right: 20px;
+  }
+
+  .user-info h1 {
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .user-info p {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  }
+
+  .title {
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table-header {
+    font-weight: 700;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+    <style>
+        /* Base styles */
+        *,
+        *::before,
+        *::after {
+          box-sizing: border-box;
+        }
+      
+        body {
+          font-family: 'Helvetica Neue', sans-serif;
+          font-size: 16px;
+          line-height: 1.5;
+          color: #333;
+          background-color: #f5f5f5;
+          margin: 0;
+          padding: 0;
+        }
+      
+        a {
+          color: #0077b5;
+          text-decoration: none;
+        }
+      
+        a:hover {
+          text-decoration: underline;
+        }
+      
+        /* Header */
+        .header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background-color: #0077b5;
+          padding: 16px;
+          color: #fff;
+        }
+      
+        .header h1 {
+          font-size: 28px;
+          margin: 0;
+        }
+      
+        .header a {
+          font-size: 16px;
+        }
+      
+        /* Main content */
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 16px;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+        }
+      
+        .title {
+          font-size: 24px;
+          margin-top: 0;
+        }
+      
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 16px;
+        }
+      
+        th, td {
+          padding: 8px;
+          text-align: left;
+          border: 1px solid #ccc;
+        }
+      
+        th {
+          background-color: #eee;
+        }
+      
+        form {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          margin-top: 16px;
+        }
+      
+        label {
+          font-weight: bold;
+          margin-bottom: 8px;
+        }
+      
+        input[type="email"] {
+          padding: 8px;
+          margin-bottom: 16px;
+          width: 100%;
+          border-radius: 3px;
+          border: 1px solid #ccc;
+        }
+      
+        button[type="submit"] {
+          padding: 8px 16px;
+          background-color: #0077b5;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+      
+        button[type="submit"]:hover {
+          background-color: #005e8e;
+        }
+      
+        /* Footer */
+        .footer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 64px;
+          background-color: #ccc;
+          color: #fff;
+        }
+      
+        .footer p {
+          margin: 0;
+        }
+      
+        .footer a {
+          color: #fff;
+        }
+      </style>
+      {% endblock %}
+

@@ -1,132 +1,120 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>InThaLoop</title>
-    <style>
-:root {
-  --primary-color: #1877f2;
-  --secondary-color: #e4e6eb;
-  --background-color: #f0f2f5;
-  --text-color: #1c1e21;
-}
+{% extends "base.html" %}
 
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: Arial, sans-serif;
-}
+{% block content %}
 
-h1 {
-  color: var(--primary-color);
-  font-family: 'Arial Black', sans-serif;
-}
+  <div class="container">
+    <h1 class="title">Get the party started anytime, anywhere with MixIt</h1>
+    <p class="description">Sign up or log in to Mixit.Life and start creating your ultimate DJ playlist. Share your favorite tracks with your favorite DJs and elevate your music game to the next level. 
+      Let Mixit.Life help you unleash your inner DJ and share your passion for music with the world.</p>
+    <a href="{{ url_for('signup') }}" class="button">Sign up now</a>
+  </div>
+  <div class="featured">
+    <h2 class="featured-title">Featured Playlists</h2>
+    <div class="featured-playlists">
+      {% for playlist in playlists %}
+        <div class="playlist">
+          <img src="{{ playlist.cover_art }}" alt="{{ playlist.name }} cover art">
+          <h3 class="playlist-title">{{ playlist.name }}</h3>
+          <p class="playlist-description">{{ playlist.description }}</p>
+          <a href="{{ url_for('share_playlist', playlist_id=playlist.id) }}" class="button">Share with a DJ</a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
 
-form,
-table {
-  margin: 0 auto;
-  width: 50%;
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 20px var(--secondary-color);
-}
+{% block css %}
 
-label {
-  display: block;
-  margin-bottom: 10px;
-  color: var(--text-color);
-  font-size: 18px;
-  font-weight: bold;
-  text-align: left;
-}
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
-input[type="text"] {
-  padding: 10px;
-  width: 100%;
-  border-radius: 5px;
-  border: none;
-  margin-bottom: 20px;
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-  font-size: 18px;
-  border: 1px solid var(--secondary-color);
-  transition: all 0.3s ease;
-}
+    body {
+      background-color: #f2f2f2;
+    }
 
-input[type="text"]:focus {
-  border: 1px solid var(--primary-color);
-  outline: none;
-}
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 50px;
+      text-align: center;
+    }
 
-input[type="submit"] {
-  background-color: var(--primary-color);
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
+    .title {
+      font-family: 'Lato', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
 
-input[type="submit"]:hover {
-  background-color: #ffffff;
-  color: var(--primary-color);
-  box-shadow: 0px 0px 10px var(--primary-color);
-}
+    .description {
+      font-family: 'Lato', sans-serif;
+      font-size: 24px;
+      line-height: 1.5;
+      margin-bottom: 50px;
+    }
 
-table {
-  margin-top: 50px;
-  border-collapse: collapse;
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 20px var(--secondary-color);
-}
+    .button {
+      display: inline-block;
+      background-color: #0A66C2;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 20px;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-th,
-td {
-  padding: 10px;
-  text-align: left;
-}
+    .featured {
+      margin-top: 50px;
+      padding: 50px;
+      background-color: white;
+    }
 
-th {
-  background-color: var(--primary-color);
-  color: #ffffff;
-  padding: 10px;
-  text-align: left;
-  font-size: 18px;
-  font-weight: bold;
-}
+    .featured-title {
+      font-family: 'Lato', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #0A66C2;
+    }
 
-tr:nth-child(even) {
-  background-color: var(--background-color);
-}
+    .featured-playlists {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
 
-h1 {
-  color: var(--primary-color);
-  font-family: 'Arial Black', sans-serif;
-  text-align: center; /* Add this line */
-}
+    .playlist {
+      margin: 20px;
+      width: 300px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+    }
 
+    .playlist img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px 5px 0 0;
+    }
 
-    </style>
-  </head>
-  <body>
-    <h1>InThaLoop Eevents</h1>
-    <form method="POST" action="{{ url_for('contributions') }}">
-      <label for="name">Name</label>
-      <input type="text" name="name" id="name"><br>
-      <label for="msisdn">MTN or Airtel Number</label>
-      <input type="text" name="msisdn" id="msisdn"><br>
-      <label for="amount">Amount</label>
-      <input type="text" name="amount" id="amount"><br>
-      <br>
-      <input type="submit" value="Contribute">
-    </form>
-    <h1>Contributions</h1>
-    {{ table|safe }}
-    <p style="text-align:center; font-size: 14px;">© 2023 InThaLoop. All rights reserved.</p>
-  </body>
-</html>
+    .playlist-title {
+      font-family: 'Lato', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      color: #0A66C2;
+    }
+
+    .playlist-description {
+      font-family: 'Lato', sans-serif;
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+  </style>
+{% endblock %}

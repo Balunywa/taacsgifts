@@ -1,129 +1,103 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Event Creation Form</title>
+    <title>Ugandan Celebrities</title>
     <style>
-      /* Add some basic styles */
-      label {
-        display: block;
-        margin-top: 10px;
+      /* CSS styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
       }
 
-      input[type="text"],
-      input[type="date"],
-      input[type="time"],
-      textarea {
+      #header {
+        background-color: #1DA1F2;
+        color: white;
+        padding: 10px;
+      }
+
+      #header h1 {
+        margin: 0;
+      }
+
+      #tweet-form {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+      }
+
+      #tweet-form input[type="text"] {
         width: 100%;
         padding: 10px;
+        margin: 10px 0;
         border: 1px solid #ccc;
         border-radius: 4px;
-        box-sizing: border-box;
-        margin-bottom: 10px;
       }
 
-      button[type="submit"] {
-        background-color: #4CAF50;
+      #tweet-form input[type="submit"] {
+        background-color: #1DA1F2;
         color: white;
-        padding: 10px 20px;
         border: none;
+        padding: 10px;
         border-radius: 4px;
         cursor: pointer;
       }
 
-      button[type="submit"]:hover {
-        background-color: #45a049;
+      .tweet {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
       }
 
-      button[type="check-in"] {
-        background-color: #f44336;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+      .tweet p {
+        margin: 0;
       }
 
-      button[type="check-in"]:hover {
-        background-color: #e53935;
+      .tweet .date {
+        font-size: 12px;
+        color: #777;
+      }
+
+      .tweet .celebrity {
+        font-size: 12px;
+        font-weight: bold;
+        color: #1DA1F2;
       }
     </style>
   </head>
   <body>
-    <h1>Create Event</h1>
-    <form>
-      <label for="event-name">Event Name</label>
-      <input type="text" id="event-name" name="event-name" required>
-
-      <label for="event-date">Date</label>
-      <input type="date" id="event-date" name="event-date" required>
-
-      <label for="event-time">Time</label>
-      <input type="time" id="event-time" name="event-time" required>
-
-      <label for="event-location">Location</label>
-      <input type="text" id="event-location" name="event-location" required>
-
-      <label for="event-description">Description</label>
-      <textarea id="event-description" name="event-description"></textarea>
-
-      <label for="attendees">Attendees</label>
-      <select multiple id="attendees">
-        {% for attendee in attendees %}
-        <option value="{{ attendee.email }}">{{ attendee.name }}</option>
-        {% endfor %}
-      </select>
-
-      <button type="submit">Create Event</button>
-    </form>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- HTML code -->
+    <div id="header">
+      <h1>Ugandan Celebrities</h1>
+    </div>
+    <div id="tweet-form">
+      <form action="/tweets" method="POST">
+        <label for="content">What's on your mind?</label>
+        <br>
+        <input type="text" id="content" name="content" placeholder="Enter your tweet here">
+        <br>
+        <label for="celebrity">Select a celebrity:</label>
+        <br>
+        <select id="celebrity" name="celebrity_id">
+          <option value="1">Celebrity 1</option>
+          <option value="2">Celebrity 2</option>
+          <option value="3">Celebrity 3</option>
+        </select>
+        <br>
+        <input type="submit" value="Tweet">
+      </form>
+    </div>
+    {% for tweet in tweets %}
+    <div class="tweet">
+      <p>{{ tweet.content }}</p>
+      <div class="metadata">
+        <span class="date">{{ tweet.date }}</span>
+        <span class="celebrity">{{ tweet.celebrity }}</span>
+      </div>
+    </div>
+    {% endfor %}
   </body>
 </html>
-<script>
-const form = document.querySelector('form');
-form.addEventListener('submit', event => {
-  event.preventDefault();
-
-  const name = document.getElementById('event-name').value;
-  const date = document.getElementById('event-date').value;
-  const time = document.getElementById('event-time').value;
-  const location = document.getElementById('event-location').value;
-  const description = document.getElementById('event-description').value;
-  const attendees = Array.from(document.getElementById('attendees').options)
-    .filter(option => option.selected)
-    .map(option => ({ name: option.text, email: option.value }));
-
-  const eventData = {
-    name: name,
-    date: date,
-    time: time,
-    location: location,
-    description: description,
-    attendees: attendees
-  };
-
-  // Get the user's location
-  navigator.geolocation.getCurrentPosition(position => {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-
-    // Update the existing eventData object to include the location coordinates
-    eventData.latitude = latitude;
-    eventData.longitude = longitude;
-
-    // Send a check-in notification to all attendees
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', '/check-in', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        const response = JSON.parse(xhr.responseText);
-        alert(response.message);
-      }
-    };
-    xhr.send(JSON.stringify(eventData));
-  });
-});
-</script>
 
 
 
