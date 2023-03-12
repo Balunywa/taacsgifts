@@ -12,6 +12,10 @@
             <h1 class="text-center mb-4"> User Sign Up to Mixit.Life</h1>
             <form method="post" action="{{ url_for('signup') }}" id="signup-form">
               <div class="form-group">
+                <label for="email-input"><span class="sr-only">Name</span></label>
+                <input type="text" name="name" id="name-input" placeholder="Name" required class="form-control">
+              </div>
+              <div class="form-group">
                 <label for="email-input"><span class="sr-only">Email or phone</span></label>
                 <input type="text" name="email" id="email-input" placeholder="Email or phone" required class="form-control">
               </div>
