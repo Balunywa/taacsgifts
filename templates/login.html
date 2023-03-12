@@ -1,3 +1,5 @@
+
+{% extends "base.html" %}
 {% block title %}Log In{% endblock %}
 
 {% block content %}
@@ -128,9 +130,9 @@
       color: #166fe5;
     }
   </style>
-  {% endblock %}
-{% block javascript %}
+{% endblock %}
 
+{% block javascript %}
 <script>
   // Client-side form validation
   const loginForm = document.getElementById('login-form');
@@ -146,6 +148,8 @@
     }
   });
 </script>
+{% endblock %}
+
 
 
 
