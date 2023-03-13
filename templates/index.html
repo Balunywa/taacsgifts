@@ -1,120 +1,151 @@
+
 {% extends "base.html" %}
+{% block title %}Log In{% endblock %}
 
 {% block content %}
 
   <div class="container">
-    <h1 class="title">Get the party started anytime, anywhere with MixIt</h1>
-    <p class="description">Sign up or log in to Mixit.Life and start creating your ultimate DJ playlist. Share your favorite tracks with your favorite DJs and elevate your music game to the next level. 
-      Let Mixit.Life help you unleash your inner DJ and share your passion for music with the world.</p>
-    <a href="{{ url_for('signup') }}" class="button">Sign up now</a>
-  </div>
-  <div class="featured">
-    <h2 class="featured-title">Featured Playlists</h2>
-    <div class="featured-playlists">
-      {% for playlist in playlists %}
-        <div class="playlist">
-          <img src="{{ playlist.cover_art }}" alt="{{ playlist.name }} cover art">
-          <h3 class="playlist-title">{{ playlist.name }}</h3>
-          <p class="playlist-description">{{ playlist.description }}</p>
-          <a href="{{ url_for('share_playlist', playlist_id=playlist.id) }}" class="button">Share with a DJ</a>
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-6">
+        <div class="card mt-5">
+          <div class="card-body">
+            <h1 class="text-center mb-4">Log in to Mixit.Life</h1>
+            <form method="post" action="{{ url_for('login') }}" id="login-form">
+              <div class="form-group">
+                <label for="email-input"><span class="sr-only">Email or phone</span></label>
+                <input type="text" name="email" id="email-input" placeholder="Email or phone" required class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="password-input"><span class="sr-only">Password</span></label>
+                <input type="password" name="password" id="password-input" placeholder="Password" required class="form-control">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">Log In</button>
+              </div>
+              <div class="form-group text-center">
+                <a href="#" class="forgot-password">Forgot Password?</a>
+              </div>
+              <hr>
+              <p class="text-center">Don't have an account? <a href="{{ url_for('signup') }}">Sign up for Mixit.Life</a></p>
+            </form>
+          </div>
         </div>
-      {% endfor %}
+      </div>
     </div>
   </div>
+
 {% endblock %}
 
 {% block css %}
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
     body {
-      background-color: #f2f2f2;
+      background-color: #f0f2f5;
+      font-family: 'Roboto', sans-serif;
     }
 
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 50px;
-      text-align: center;
-    }
-
-    .title {
-      font-family: 'Lato', sans-serif;
-      font-size: 48px;
-      font-weight: 700;
-      margin-bottom: 30px;
-    }
-
-    .description {
-      font-family: 'Lato', sans-serif;
-      font-size: 24px;
-      line-height: 1.5;
-      margin-bottom: 50px;
-    }
-
-    .button {
-      display: inline-block;
-      background-color: #0A66C2;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      margin-top: 20px;
+    .card {
       border: none;
-      font-size: 20px;
-      font-weight: bold;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    .featured {
-      margin-top: 50px;
-      padding: 50px;
-      background-color: white;
-    }
-
-    .featured-title {
-      font-family: 'Lato', sans-serif;
-      font-size: 36px;
-      font-weight: 700;
-      margin-bottom: 30px;
-      color: #0A66C2;
-    }
-
-    .featured-playlists {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .playlist {
-      margin: 20px;
-      width: 300px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      overflow: hidden;
-    }
-
-    .playlist img {
-      width: 100%;
-      height: auto;
-      border-radius: 5px 5px 0 0;
-    }
-
-    .playlist-title {
-      font-family: 'Lato', sans-serif;
+    h1 {
       font-size: 24px;
       font-weight: 700;
-      margin-top: 20px;
-      margin-bottom: 10px;
-      color: #0A66C2;
+      margin-bottom: 30px;
     }
 
-    .playlist-description {
-      font-family: 'Lato', sans-serif;
-      font-size: 18px;
-      margin-bottom: 20px;
-      color: #333;
+    label {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #606770;
     }
 
+    input[type="text"],
+    input[type="password"] {
+      border-radius: 5px;
+      font-size: 16px;
+      color: #1c1e21;
+      background-color: #f0f2f5;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      border-color: #1877f2;
+    }
+
+    button[type="submit"] {
+      border-radius: 5px;
+      background-color: #1877f2;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #166fe5;
+    }
+
+    .forgot-password {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1877f2;
+      text-decoration: none;
+      transition: color 0.2s ease-in-out;
+    }
+    
+    .forgot-password:hover {
+      color: #166fe5;
+    }
+    
+    hr {
+      border: none;
+      border-top: 1px solid #dddfe2;
+      margin: 20px 0;
+    }
+    
+    p {
+      font-size: 14px;
+      font-weight: 700;
+      color: #606770;
+    }
+    
+    a {
+      color: #1877f2;
+      text-decoration: none;
+      transition: color 0.2s ease-in-out;
+    }
+    
+    a:hover {
+      color: #166fe5;
+    }
   </style>
+{% endblock %}
+
+{% block javascript %}
+<script>
+  // Client-side form validation
+  const loginForm = document.getElementById('login-form');
+
+  loginForm.addEventListener('submit', (event) => {
+    const emailInput = document.getElementById('email-input');
+    const passwordInput = document.getElementById('password-input');
+
+    if (!emailInput.checkValidity() || !passwordInput.checkValidity()) {
+      event.preventDefault();
+      // Show error message to user
+      // ...
+    }
+  });
+</script>
 {% endblock %}

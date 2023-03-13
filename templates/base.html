@@ -1,51 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <style>
-      /* CSS code goes here */
+      /* Custom styles */
+  
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f3f6f8;
+        background-color: #f7f7f7;
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
       }
-
+      
+      .navbar-brand {
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); /* Add text shadow */
+      }
+      
       .logo {
         height: 50px;
-        margin-right: 20px;
+        margin-right: 10px;
       }
-
-      main {
-        margin-top: 20px;
-        margin-bottom: 20px;
+      
+      .navbar-toggler {
+        border: none;
       }
-
+      
+      .navbar-nav .nav-item .nav-link {
+        font-weight: bold;
+        transition: all 0.2s ease-in-out;
+      }
+      
+      .navbar-nav .nav-item .nav-link.active {
+        background-color: #ff3a00;
+        color: #ffffff;
+      }
+      
+      .navbar-nav .nav-item .nav-link:hover {
+        background-color: #ffffff;
+        color: #ff3a00;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+      }
+      
+      .alert {
+        font-weight: bold;
+        border-radius: 4px;
+      }
+      
+      .alert.alert-success {
+        background-color: #007aff;
+        color: #ffffff;
+        border-color: #007aff;
+      }
+      
       footer {
-        background-color: #f3f6f8;
-        color: #626a72;
-        padding: 20px;
-        text-align: center;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        margin-top: 50px;
+        padding: 20px 0;
+        background-color: #f7f7f7;
       }
-
+      
       footer p {
-        font-size: 18px;
         margin: 0;
+        text-align: center;
       }
-
-      footer img {
-        height: 50px;
-        margin-left: 10px;
+      
+      footer a {
+        color: #ff3a00;
+        transition: all 0.2s ease-in-out;
       }
+      
+      footer a:hover {
+        color: #007aff;
+        text-decoration: underline;
+      }
+      
+      .navbar-dark.bg-primary {
+        background-color: #ff3a00;
+      }
+      
+      .navbar-dark .navbar-brand,
+      .navbar-dark .navbar-nav .nav-link {
+        color: #ffffff;
+      }
+      
+      .navbar-dark .navbar-toggler-icon {
+        background-image: url('data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/></svg>');
+      }
+      
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        font-size: 16px;
+        margin-bottom: 16px;
+      }
+      
+      .navbar {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
     </style>
   </head>
   <body>
@@ -53,7 +114,7 @@
       <nav class="navbar navbar-expand-md navbar-dark bg-primary">
         <a class="navbar-brand" href="#">
           <img src="https://i.imgur.com/US8mrzW.png" alt="Mixit.Life" class="logo">
-          <h1 style="font-size: 32px; font-weight: bold; margin: 0;">Welcome to Mixit.Life</h1>
+          Welcome to Mixit.Life
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
@@ -62,31 +123,32 @@
           <ul class="navbar-nav ml-auto">
             {% if 'user_id' in session %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+              <a class="nav-link" href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('create_playlist') }}">Create Playlist</a>
+              <a class="nav-link" href="{{ url_for('create_playlist') }}"><i class="fas fa-plus-circle"></i> Create Playlist</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+              <a class="nav-link" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('signup') }}">User Sign up</a>
+              <a class="nav-link" href="{{ url_for('signup') }}"><i class="fas fa-user-plus"></i> User Sign up</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('dj_signup') }}">DJ Sign up</a>
+              <a class="nav-link" href="{{ url_for('dj_signup') }}"><i class="fas fa-music"></i> DJ Sign up</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('login') }}">Log in</a>
+              <a class="nav-link" href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Log in</a>
             </li>
             {% endif %}
           </ul>
         </div>
       </nav>
     </header>
-    
+
     <main class="container">
+
       <div class="row">
         <div class="col">
           {% with messages = get_flashed_messages() %}
@@ -101,24 +163,44 @@
           {% endfor %}
           {% endif %}
           {% endwith %}
-
+    
           {% block content %}{% endblock %}
         </div>
       </div>
     </main>
-
+    
     <footer class="bg-light">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
             <p>&copy; 2023 Mixit.Life</p>
           </div>
+          <div class="col-md-6">
+            <ul class="list-inline text-right">
+              <li class="list-inline-item"><a href="#"><i class="fab fa-facebook fa-lg"></i></a></li>
+              <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-lg"></i></a></li>
+              <li class="list-inline-item"><a href="#"><i class="fab fa-instagram fa-lg"></i></a></li>
+              <li class="list-inline-item"><a href="#"><i class="fab fa-soundcloud fa-lg"></i></a></li>
+              <li class="list-inline-item"><a href="#"><i class="fab fa-itunes-note fa-lg"></i></a></li>
+            </ul>
           </div>
+        </div>
       </div>
     </footer>
-
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
   </body>
-</html>
+  </html>
+    
+      
+     
+
+     
+
+
+  
 
 
    

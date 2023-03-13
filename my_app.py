@@ -155,6 +155,20 @@ def logout():
     flash('You are now logged out', 'success')
     return redirect(url_for('login'))
 
+"""
+@app.route('/dashboard')
+def dashboard():
+    if 'user_id' not in session:
+        flash('Please log in to view your dashboard', 'error')
+        return redirect(url_for('login'))
+
+    user = User.query.options(load_only(User.id, User.name, User.balance)).filter_by(id=session['user_id']).first()
+    playlists = Playlist.query.options(load_only(Playlist.id, Playlist.name, Playlist.share_cost)).filter_by(user=user).all()
+    djs = DJ.query.all()
+
+    return render_template('dashboard.html', user=user, playlists=playlists, djs=djs)
+"""
+
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' not in session:
@@ -194,6 +208,45 @@ def create_playlist():
 
     return render_template('create_playlist.html', user=user)
 
+#############################################################################
+"""
+@app.route('/share_playlist/<int:playlist_id>', methods=['POST'])
+def share_playlist(playlist_id):
+    if 'user_id' not in session:
+        flash('Please log in to share a playlist', 'error')
+        return redirect(url_for('login'))
+
+    user = User.query.options(load_only(User.id)).filter_by(id=session['user_id']).first()
+    playlist = Playlist.query.options(load_only(Playlist.id)).filter_by(id=playlist_id, user=user).first()
+
+    if not playlist:
+        flash('Playlist not found', 'error')
+        return redirect(url_for('dashboard'))
+
+    dj_id = request.form.get('dj_id')
+
+    if not dj_id:
+        flash('Please select a DJ to share the playlist with', 'error')
+        return redirect(url_for('dashboard'))
+
+    dj = DJ.query.get(dj_id)
+
+    if not dj:
+        flash('Selected DJ not found', 'error')
+        return redirect(url_for('dashboard'))
+
+    if user.balance < playlist.share_cost:
+        flash('You do not have enough balance to share this playlist', 'error')
+        return redirect(url_for('dashboard'))
+
+    user.balance -= playlist.share_cost
+    dj.balance += playlist.share_cost
+
+    db.session.commit()
+
+    flash(f'Playlist shared with {dj.name} successfully', 'success')
+    return redirect(url_for('dashboard'))
+"""
 
 @app.route('/playlist/<int:playlist_id>/share', methods=['GET', 'POST'])
 def share_playlist(playlist_id):
@@ -223,4 +276,3 @@ def share_playlist(playlist_id):
 
 if __name__ == '__main__':
    app.run(debug=True)
-
