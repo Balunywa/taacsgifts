@@ -21,7 +21,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
-            {% if 'user_id' in session %}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
             </li>
@@ -29,22 +28,11 @@
               <a class="nav-link" href="{{ url_for('search') }}"><i class="fas fa-home"></i> Search</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('create_playlist', song_id=None) }}"><i class="fas fa-plus-circle"></i> Create Playlist</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('signup') }}"><i class="fas fa-user-plus"></i> User Sign up</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('dj_signup') }}"><i class="fas fa-music"></i> DJ Sign up</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Log in</a>
             </li>
-            {% endif %}
           </ul>
         </div>
       </nav>
