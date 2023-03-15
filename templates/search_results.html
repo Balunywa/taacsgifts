@@ -1,28 +1,37 @@
 {% extends 'base.html' %}
 
-{% block title %}Search Results{% endblock %}
-
 {% block content %}
-  <h1>Search Results for "{{ search_term }}"</h1>
-  {% if data %}
+  <h1>Search results for "{{ search_term }}"</h1>
+  <form method="post" action="{{ url_for('create_playlist') }}">
+    <input type="hidden" name="user_id" value="{{ user_id }}">
     <div class="row">
-      {% for result in data %}
-        <div class="col-md-4 mb-4">
-          <div class="card">
-            <img src="{{ result.artworkUrl100 }}" class="card-img-top" alt="{{ result.trackName }}">
+      {% for song in data %}
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="{{ song.artworkUrl100 }}" class="card-img-top" alt="{{ song.trackName }}">
             <div class="card-body">
-              <h5 class="card-title">{{ result.trackName }}</h5>
-              <p class="card-text">{{ result.artistName }}</p>
-              <a href="{{ url_for('create_playlist',track_name=result.trackName, artist_name=result.artistName, artwork_url=result.artworkUrl100) }}" class="btn btn-primary">Create Playlist</a>
+              <h5 class="card-title">{{ song.trackName }}</h5>
+              <p class="card-text">{{ song.artistName }}</p>
+              <input type="checkbox" name="song" value='{"title": {{ song.trackName|tojson }}, "artist": {{ song.artistName|tojson }}, "cover_art": {{ song.artworkUrl100|tojson }}}'>
+              <label>Select song</label>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
-  {% else %}
-    <p>No results found for "{{ search_term }}"</p>
-  {% endif %}
+    <div class="form-group">
+      <label for="playlistName">Playlist Name:</label>
+      <input type="text" class="form-control" name="name" id="playlistName" required>
+    </div>
+    <div class="form-group">
+      <label for="playlistDescription">Playlist Description:</label>
+      <textarea class="form-control" name="description" id="playlistDescription" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Playlist</button>
+  </form>
 {% endblock %}
+
+
 
 
 

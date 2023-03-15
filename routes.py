@@ -7,6 +7,9 @@ from forms import SearchForm, PlaylistForm, AddSongForm
 import requests
 from sqlalchemy.orm import load_only
 from flask_login import login_user, logout_user
+import json
+from sqlalchemy.orm import joinedload
+
 
 
 @app.before_first_request
@@ -64,19 +67,29 @@ def logout():
     flash('You are now logged out', 'success')
     return redirect(url_for('login'))
 
-
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    user_id = current_user.id
- 
-    user = User.query.options(load_only(User.id, User.name, User.email)).filter_by(id=user_id).first()
-    
-    playlists = user.playlists
-    
-    song = Song.query.first()
+    user_id = current_user.get_id()
+    playlists = Playlist.query.filter_by(user_id=user_id).all()
+    songs = (
+        db.session.query(Song)
+        .join(Playlist, Song.playlist_id == Playlist.id)
+        .filter(Playlist.user_id == user_id)
+        .all()
+    )
+    return render_template('dashboard.html', playlists=playlists, songs=songs)
 
-    return render_template('dashboard.html', user=user, playlists=playlists, song=song)
+
+"""
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    user_id = current_user.get_id()
+    playlists = Playlist.query.filter_by(user_id=user_id).all()
+    songs = Song.query.filter_by(user_id=user_id).all()
+    return render_template('dashboard.html', playlists=playlists, songs=songs)
+"""
 
 @app.route('/search', methods=['GET', 'POST'])
 @login_required
@@ -119,36 +132,36 @@ def add_song(song_id):
     return render_template('add_song.html', song=song, playlists=playlists, form=form)
 
 
-@app.route('/create_playlist', methods=['GET', 'POST'])
+@app.route('/create_playlist', methods=['POST'])
 @login_required
 def create_playlist():
-    user_id = current_user.id
+    user_id = current_user.get_id()
+    selected_songs = request.form.getlist('selected_songs')
     
-    if 'user_id' not in session:
-        flash('Please log in to create a playlist.', 'danger')
-        return redirect(url_for('login'))
+    for song_data in selected_songs:
+        song = json.loads(song_data)
+        
+        # Add the print statement to output the song data to the console
+        print(song)
+        
+        new_song = Song(
+            user_id=user_id,
+            track_id=song['trackId'],
+            track_name=song['trackName'],
+            artist_name=song['artistName'],
+            album_name=song['collectionName'],
+            preview_url=song['previewUrl'],
+            artwork_url=song['artworkUrl100']
+        )
+        
+        db.session.add(new_song)
+    
+    db.session.commit()
+    flash('Playlist created successfully!', 'success')
+    return redirect(url_for('dashboard'))
 
-    form = PlaylistForm()
 
-    if form.validate_on_submit():
-        user_id = session['user_id']
-        user = User.query.get(user_id)
 
-        if user:
-            playlist_name = form.playlist_name.data
-            playlist_description = form.playlist_description.data
-
-            new_playlist = Playlist(name=playlist_name, description=playlist_description, user_id=user_id)
-            db.session.add(new_playlist)
-            db.session.commit()
-
-            flash('Playlist created successfully!', 'success')
-            return redirect(url_for('dashboard'))
-        else:
-            flash('User not found.', 'danger')
-            return redirect(url_for('login'))
-
-    return render_template('create_playlist.html', form=form)
 
 
 

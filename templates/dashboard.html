@@ -1,27 +1,23 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="my-4">Dashboard</h1>
+    <h1>Your Playlists</h1>
+    {% for playlist in playlists %}
+        <div>
+            <h2>{{ playlist.name }}</h2>
+            <p>{{ playlist.description }}</p>
+            <h3>Songs in this playlist:</h3>
+            <ul>
+            {% for song in songs %}
+                {% if song.playlist_id == playlist.id %}
+                    <li>{{ song.track_name }} - {{ song.artist_name }}</li>
+                {% endif %}
+            {% endfor %}
+            </ul>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">User Details</h5>
-                    <p class="card-text">Name: {{ user.name }}</p>
-                    <p class="card-text">Email: {{ user.email }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <!-- You can add more content, like user's playlists or other information, in this column -->
-        </div>
-    </div>
-</div>
+    {% endfor %}
 {% endblock %}
+
+
 
         

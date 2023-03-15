@@ -11,7 +11,33 @@
     </div>
     <button type="submit" class="btn btn-primary">Search</button>
   </form>
+
+  {% if search_results %}
+    <h2>Create Playlist</h2>
+    <form action="{{ url_for('create_playlist') }}" method="post">
+      {{ form.hidden_tag() }}  <!-- Add this line to include CSRF token -->
+      <div class="form-group">
+          <label for="name">Playlist Name:</label>
+          <input type="text" class="form-control" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+          <label for="description">Playlist Description:</label>
+          <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+      </div>
+      <!-- Add your song checkboxes here -->
+      {% for song in search_results %}
+          <div>
+              <input type="checkbox" name="song" value="{{ song_data }}">
+              <label>{{ song.title }} - {{ song.artist }}</label>
+          </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">Create Playlist</button>
+    </form>
+  {% endif %}
 {% endblock %}
+
+
+
 
 
 

@@ -8,8 +8,6 @@ from sqlalchemy.orm import load_only
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 
 
-
-
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'mysecretkey'

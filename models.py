@@ -15,9 +15,20 @@ class User(db.Model, UserMixin):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     playlists = db.relationship('Playlist', backref='user', lazy=True)
     shares = db.relationship('Share', backref='user', lazy=True)
+    selected_songs = db.relationship('SelectedSong', backref='user', lazy=True)
+
+class SelectedSong(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    track_id = db.Column(db.Integer)
+    track_name = db.Column(db.String(255))
+    artist_name = db.Column(db.String(255))
+    album_name = db.Column(db.String(255))
+    preview_url = db.Column(db.String(255))
+    artwork_url = db.Column(db.String(255))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     
-
 class DJ(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -31,11 +42,12 @@ class Playlist(db.Model):
     description = db.Column(db.Text)
     cover_art = db.Column(db.String(255))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    dj_id = db.Column(db.Integer, db.ForeignKey('dj.id'), nullable=False)
+    dj_id = db.Column(db.Integer, db.ForeignKey('dj.id'), nullable=True)
     share_cost = db.Column(db.Float, default=0.0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     songs = db.relationship('Song', backref='playlist', primaryjoin='and_(Playlist.id==Song.playlist_id)')
     shares = db.relationship('Share', backref='playlist', lazy=True)
+
 
     
 class Song(db.Model):
@@ -88,6 +100,7 @@ class Share(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     playlist_id = db.Column(db.Integer, db.ForeignKey('playlist.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
 
 class SearchResult(db.Model):
     id = db.Column(db.Integer, primary_key=True)
