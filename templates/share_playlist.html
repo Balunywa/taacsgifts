@@ -1,6 +1,30 @@
-{% extends 'base.html' %}
+<h1>{{ playlist.name }}</h1>
 
-{% block content %}
-  <h1>Playlist Shared</h1>
-  <p>The playlist has been shared with the DJ at {{ dj_email }}.</p>
-{% endblock %}
+<h3>Songs:</h3>
+<ul>
+{% for song in playlist.songs %}
+    <li>{{ song.name }} by {{ song.artist.name }} from {{ song.album.name }}</li>
+{% endfor %}
+</ul>
+
+<h3>Musicians:</h3>
+<ul>
+{% for musician in playlist.musicians %}
+    <li>{{ musician.name }} ({{ musician.instrument }})</li>
+{% endfor %}
+</ul>
+
+<h3>Share with DJs:</h3>
+<form method="post">
+    {% for user in users %}
+        <div class="form-check">
+            <input type="checkbox" name="users" value="{{ user.id }}" class="form-check-input" id="user-{{ user.id }}">
+            <label for="user-{{ user.id }}" class="form-check-label">{{ user.name }} ({{ user.email }})</label>
+        </div>
+    {% endfor %}
+    <br>
+    <button type="submit" class="btn btn-primary">Share</button>
+</form>
+
+
+

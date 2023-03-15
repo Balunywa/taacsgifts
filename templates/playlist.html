@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST" action="{{ url_for('add_song') }}">
+  <label for="song_name">Song Name:</label>
+  <input type="text" name="song_name" id="song_name"><br><br>
+  <label for="artist_name">Artist Name:</label>
+  <input type="text" name="artist_name" id="artist_name"><br><br>
+  <label for="album_name">Album Name:</label>
+  <input type="text" name="album_name" id="album_name"><br><br>
+  <label for="playlist_name">Playlist Name:</label>
+  <input type="text" name="playlist_name" id="playlist_name"><br><br>
+  <input type="submit" value="Add Song">
+</form>
+  {% endfor %}
+{% endblock %}
+
+

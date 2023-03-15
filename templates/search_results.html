@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+  <h1>Search Results for "{{ search_term }}"</h1>
+  {% if data %}
+    <div class="row">
+      {% for result in data %}
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="{{ result.artworkUrl100 }}" class="card-img-top" alt="{{ result.trackName }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ result.trackName }}</h5>
+              <p class="card-text">{{ result.artistName }}</p>
+              <a href="{{ url_for('create_playlist',track_name=result.trackName, artist_name=result.artistName, artwork_url=result.artworkUrl100) }}" class="btn btn-primary">Create Playlist</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No results found for "{{ search_term }}"</p>
+  {% endif %}
+{% endblock %}
+
+
+
+

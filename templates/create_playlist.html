@@ -1,79 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Create Playlist{% endblock %}
 
 {% block content %}
-    <style>
-      /* CSS for create playlist page */
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #fafafa;
-      }
-
-      form {
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-bottom: 20px;
-      }
-
-      label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-      }
-
-      input[type="text"], input[type="url"], textarea {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 16px;
-        margin-bottom: 10px;
-      }
-
-      button[type="submit"] {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        background-color: #007bff;
-        color: #fff;
-        font-size: 16px;
-        cursor: pointer;
-      }
-
-      button[type="submit"]:hover {
-        background-color: #0062cc;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Create Playlist</h1>
-      <form method="post">
-        <div class="form-group">
-          <label for="name">Name:</label>
-          <input type="text" class="form-control" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-          <label for="description">Description:</label>
-          <textarea class="form-control" id="description" name="description"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="cover_art">Cover Art URL:</label>
-          <input type="url" class="form-control" id="cover_art" name="cover_art">
-        </div>
-        <div class="form-group">
-          <label for="musicians">Musicians/Songs:</label>
-          <input type="text" class="form-control" id="musicians" name="musicians" required>
-          <small class="form-text text-muted">Enter the musician or song names separated by commas.</small>
-        </div>
-        <button type="submit" class="btn btn-primary">Create Playlist</button>
-      </form>      
+  <h1>Create Playlist</h1>
+  <form action="{{ url_for('create_playlist') }}" method="post">
+    <div class="form-group">
+      <label for="playlist_name">Playlist Name:</label>
+      <input type="text" class="form-control" id="playlist_name" name="playlist_name" placeholder="Enter playlist name" required>
     </div>
+    <div class="form-group">
+      <label for="playlist_description">Playlist Description:</label>
+      <textarea class="form-control" id="playlist_description" name="playlist_description" rows="3" placeholder="Enter playlist description"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Playlist</button>
+  </form>
 {% endblock %}
+
+
+
+
+
 
 
 

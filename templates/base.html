@@ -7,107 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <style>
-      /* Custom styles */
-  
-      body {
-        background-color: #f7f7f7;
-        font-family: 'Roboto', sans-serif;
-        font-size: 16px;
-      }
-      
-      .navbar-brand {
-        font-size: 24px;
-        font-weight: bold;
-        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1); /* Add text shadow */
-      }
-      
-      .logo {
-        height: 50px;
-        margin-right: 10px;
-      }
-      
-      .navbar-toggler {
-        border: none;
-      }
-      
-      .navbar-nav .nav-item .nav-link {
-        font-weight: bold;
-        transition: all 0.2s ease-in-out;
-      }
-      
-      .navbar-nav .nav-item .nav-link.active {
-        background-color: #ff3a00;
-        color: #ffffff;
-      }
-      
-      .navbar-nav .nav-item .nav-link:hover {
-        background-color: #ffffff;
-        color: #ff3a00;
-        text-decoration: none;
-        transition: all 0.2s ease-in-out;
-      }
-      
-      .alert {
-        font-weight: bold;
-        border-radius: 4px;
-      }
-      
-      .alert.alert-success {
-        background-color: #007aff;
-        color: #ffffff;
-        border-color: #007aff;
-      }
-      
-      footer {
-        margin-top: 50px;
-        padding: 20px 0;
-        background-color: #f7f7f7;
-      }
-      
-      footer p {
-        margin: 0;
-        text-align: center;
-      }
-      
-      footer a {
-        color: #ff3a00;
-        transition: all 0.2s ease-in-out;
-      }
-      
-      footer a:hover {
-        color: #007aff;
-        text-decoration: underline;
-      }
-      
-      .navbar-dark.bg-primary {
-        background-color: #ff3a00;
-      }
-      
-      .navbar-dark .navbar-brand,
-      .navbar-dark .navbar-nav .nav-link {
-        color: #ffffff;
-      }
-      
-      .navbar-dark .navbar-toggler-icon {
-        background-image: url('data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/></svg>');
-      }
-      
-      input[type="text"],
-      input[type="email"],
-      textarea {
-        padding: 8px;
-        border-radius: 4px;
-        border: 1px solid #ddd;
-        font-size: 16px;
-        margin-bottom: 16px;
-      }
-      
-      .navbar {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-      
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom_styles.css') }}"> <!-- Add this line to link the custom CSS file -->
   </head>
   <body>
     <header>
@@ -126,7 +26,10 @@
               <a class="nav-link" href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('create_playlist') }}"><i class="fas fa-plus-circle"></i> Create Playlist</a>
+              <a class="nav-link" href="{{ url_for('search') }}"><i class="fas fa-home"></i> Search</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('create_playlist', song_id=None) }}"><i class="fas fa-plus-circle"></i> Create Playlist</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -184,14 +87,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
   </body>
   </html>
-    
-      
-     
-
-     
 
 
-  
-
-
-   

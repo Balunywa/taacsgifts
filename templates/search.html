@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Search for Music Tracks</h1>
+  <hr>
+
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      {{ form.search_term.label }} {{ form.search_term(size=32, class_='form-control') }}
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+{% endblock %}
+
+
+
+
+
+
+
+
+
