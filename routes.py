@@ -67,29 +67,14 @@ def logout():
     flash('You are now logged out', 'success')
     return redirect(url_for('login'))
 
+
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    user_id = current_user.get_id()
-    playlists = Playlist.query.filter_by(user_id=user_id).all()
-    songs = (
-        db.session.query(Song)
-        .join(Playlist, Song.playlist_id == Playlist.id)
-        .filter(Playlist.user_id == user_id)
-        .all()
-    )
-    return render_template('dashboard.html', playlists=playlists, songs=songs)
+    user_id = current_user.id
+    playlists = Playlist.query.options(joinedload(Playlist.songs)).filter_by(user_id=user_id).all()
+    return render_template('dashboard.html', playlists=playlists)
 
-
-"""
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    user_id = current_user.get_id()
-    playlists = Playlist.query.filter_by(user_id=user_id).all()
-    songs = Song.query.filter_by(user_id=user_id).all()
-    return render_template('dashboard.html', playlists=playlists, songs=songs)
-"""
 
 @app.route('/search', methods=['GET', 'POST'])
 @login_required
